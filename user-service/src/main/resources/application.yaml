@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: user-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    metadata-map:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+server:
+  port: 9001
