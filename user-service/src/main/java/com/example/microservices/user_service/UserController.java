@@ -1,0 +1,30 @@
+package com.example.microservices.user_service;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+	private final RestTemplate restTemplate = new RestTemplate();
+
+	@GetMapping("/user-get")
+	public String get() {
+		return "User-Hello-Wrold";
+	}
+
+	@GetMapping("/getOrderByUserId/{id}")
+	public String getOrderByUserId(@PathVariable("id") String id) {
+		String response = getOrderById(id);
+		return response;
+	}
+
+	public String getOrderById(String orderId) {
+		String url = "http://localhost:8080/orders/getorderbyid/" + orderId;
+		return restTemplate.getForObject(url, String.class);
+	}
+}
