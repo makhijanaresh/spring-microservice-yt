@@ -15,11 +15,16 @@ public class OrderController {
 	}
 
 	@GetMapping("/getorderbyid/{id}")
-	public String get(@PathVariable("id") String id) {
+	public String get(@PathVariable("id") String id) throws Exception {
 		String orderValue = "Java:1";
 
 		if (id.equals("2")) {
 			orderValue = ".Net:2";
+		}
+		
+		if(id.equals("3"))
+		{
+			throw new Exception("We don't support id 3");
 		}
 		String response = orderValue;
 

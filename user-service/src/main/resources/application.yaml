@@ -10,5 +10,32 @@ eureka:
     hostname: localhost
     metadata-map:
       instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  
+resilience4j:
+  circuitbreaker:
+    instances:
+      user-circuit-breaker:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 20
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 20s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
 server:
   port: 9001
+  
