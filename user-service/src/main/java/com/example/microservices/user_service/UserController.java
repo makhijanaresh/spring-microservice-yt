@@ -1,5 +1,6 @@
 package com.example.microservices.user_service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +14,13 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 public class UserController {
 
 	private final RestTemplate restTemplate = new RestTemplate();
+	
+	@Value("${service.env}")
+	private String env;
 
 	@GetMapping("/user-get")
 	public String get() {
-		return "User-Hello-Wrold";
+		return "User-Hello-Wrold "+env;
 	}
 
 	@GetMapping("/getOrderByUserId/{id}")
